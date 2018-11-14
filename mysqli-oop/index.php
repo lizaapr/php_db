@@ -21,6 +21,7 @@ if (!isset($_SESSION['basic_is_logged_in']) ||
 		<h2>Menampilkan data dari database</h2>
 	</div>
 	<br/>
+	<p><a href="logout.php">Logout</a></p>
 
 	<?php 
 	if(isset($_GET['pesan'])){

@@ -5,19 +5,38 @@ session_start();
 $errorMessage = '';
 if (isset ($_POST['txtUserId']) && 
 	isset($_POST['txtPassword'])){
+	include 'koneksi.php';
+
+	$userId = $_POST['txtUserId'];
+	$password = $_POST['txtPassword'];
 	//check if the username and password combination is correct
-	if($_POST['txtUserId'] === 'admin' &&
-		$_POST['txtPassword'] === 'admin') {
+	$sql = "select * from user where user_id ='$userId' AND password= '$password'";
+
+	$result = $host->query($sql); 
+	if(!$result){
+		
+		die("Query Error". $host->error);
+	}
+
+	//if($_POST['txtUserId'] === 'admin' &&
+		//$_POST['txtPassword'] === 'admin') {
+		if ($result->num_rows== 1){
+			//the user id and password match,
+			//set the session
+			$_SESSION['basic_is_logged_in'] = true;
+
+			//affter login we move to the main page header
+
 		//the username and password match,
 		//set the session
-		$_SESSION['basic_is_logged_in'] = true;
-
+		
 	//after login we move to the  main page 
 	header('Location: index.php');
 	exit;
 	} else{
 		$errorMessage='Sorry, wrong username / password';
 	}
+	// include 'closedb.php';
 }
 ?>
 <html>
